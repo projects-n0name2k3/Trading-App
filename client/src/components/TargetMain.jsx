@@ -97,7 +97,7 @@ const TargetMain = () => {
         </ActionIcon>
       </div>
 
-      <div className="col-span-12 row-span-10 mt-4">
+      <div className="col-span-12 row-span-10 mt-4 text-neutral-400">
         <ScrollArea h={500} w={"100%"} scrollbarSize={2}>
           <Table>
             <Table.Thead>

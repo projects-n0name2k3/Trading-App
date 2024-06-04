@@ -40,7 +40,7 @@ const SideBar = () => {
           <p className="text-neutral-400 text-sm">Admin</p>
         </div>
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 text-neutral-400">
         {data.map((item, index) => (
           <NavLink
             key={item.label}
