@@ -59,16 +59,16 @@ const ChartMain = () => {
     fetchData();
   }, []);
   useEffect(() => {
-    if (result) {
-      const formattedData = result.map((item) => ({
-        date: new Date(item.timestamp * 1000).toLocaleDateString("en-US"),
-        high: item.high,
-        low: item.low,
-        mid: item.mid,
-      }));
-      setChartData(formattedData);
-    }
-  }, [result]);
+    const formattedData = profitData.map((data, index) => {
+      const balance = 1000 + data;
+      const date = new Date();
+      date.setDate(date.getDate() - (profitData.length - index));
+      return { date, balance };
+    });
+    console.log(formattedData);
+
+    setChartData(formattedData);
+  }, []);
 
   return (
     <div className="col-span-9  grid grid-cols-12 grid-rows-12 gap-x-5 p-4">
