@@ -3,67 +3,22 @@ import { Sparkline } from "@mantine/charts";
 import { LineChart } from "@mantine/charts";
 import { Skeleton } from "@mantine/core";
 const ChartMain = () => {
-  const [result, setResult] = useState(null);
   const [chartData, setChartData] = useState(null);
   const [profitData, setProfitData] = useState(
     JSON.parse(localStorage.getItem("dayData")) || []
   );
-  const fetchData = async () => {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
 
-    var today = new Date();
-    var january = new Date(2023, 0, 1);
-    var timestamps = [];
-    var currentDate = january;
-    while (currentDate <= today) {
-      var lastDayOfMonth = new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth() + 1,
-        0
-      );
-      var timestamp = Math.floor(lastDayOfMonth.getTime() / 1000);
-      timestamps.push(timestamp);
-      currentDate.setMonth(currentDate.getMonth() + 1);
-    }
-    var requests = timestamps.map((timestamp) => {
-      var raw = JSON.stringify({
-        operationName: "MetalQuote",
-        query:
-          "fragment MetalFragment on Metal { ID symbol currency name results { ...MetalQuoteFragment } } fragment MetalQuoteFragment on Quote { ID ask bid change changePercentage close high low mid open originalTime timestamp unit } query MetalQuote( $symbol: String! $currency: String! $timestamp: Int ) { GetMetalQuoteV3( symbol: $symbol currency: $currency timestamp: $timestamp ) { ...MetalFragment } }",
-        variables: {
-          currency: "USD",
-          symbol: "AU",
-          timestamp: timestamp,
-        },
-      });
-
-      var requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-      };
-
-      return fetch("https://kitco-gcdn-prod.stellate.sh/", requestOptions)
-        .then((response) => response.json())
-        .then((result) => result.data.GetMetalQuoteV3.results[0])
-        .catch((error) => console.log("error", error));
-    });
-
-    Promise.all(requests)
-      .then((results) => setResult(results))
-      .catch((error) => console.log("error", error));
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
   useEffect(() => {
     const formattedData = profitData.map((data, index) => {
       const balance = 1000 + data.value;
       const date = new Date();
       date.setDate(date.getDate() - (profitData.length - index));
-      return { date, balance };
+      const formattedDate = date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      });
+      return { formattedDate, balance };
     });
     console.log(formattedData);
 
