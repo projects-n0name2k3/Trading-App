@@ -10,7 +10,8 @@ const ChartMain = () => {
 
   useEffect(() => {
     const formattedData = profitData.map((data, index) => {
-      const balance = 1000 + data.value;
+      const balance =
+        index === 0 ? 1000 : formattedData[index - 1].balance + data.value;
       const date = new Date();
       date.setDate(date.getDate() - (profitData.length - index));
       const formattedDate = date.toLocaleDateString("en-US", {
