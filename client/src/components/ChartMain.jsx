@@ -61,7 +61,7 @@ const ChartMain = () => {
   useEffect(() => {
     if (result) {
       const formattedData = result.map((item) => ({
-        date: item.originalTime.split(" ")[0],
+        date: new Date(item.timestamp * 1000).toLocaleDateString("en-US"),
         high: item.high,
         low: item.low,
         mid: item.mid,
