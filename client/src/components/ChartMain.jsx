@@ -60,7 +60,7 @@ const ChartMain = () => {
   }, []);
   useEffect(() => {
     const formattedData = profitData.map((data, index) => {
-      const balance = 1000 + data;
+      const balance = 1000 + data.value;
       const date = new Date();
       date.setDate(date.getDate() - (profitData.length - index));
       return { date, balance };
