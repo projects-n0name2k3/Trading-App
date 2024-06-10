@@ -41,11 +41,7 @@ const ChartMain = () => {
               data={chartData || []}
               dataKey="date"
               tooltipAnimationDuration={200}
-              series={[
-                { name: "high", color: "indigo.6" },
-                { name: "low", color: "blue.6" },
-                { name: "mid", color: "teal.6" },
-              ]}
+              series={[{ name: "balance", color: "teal.6" }]}
               curveType="natural"
               yAxisDomain={[1500, "auto"]}
             />
